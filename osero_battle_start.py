@@ -1,4 +1,5 @@
 import pygame
+import time
 
 # 初期化
 pygame.init()
@@ -59,6 +60,7 @@ pass_num = 0
 font = pygame.font.SysFont(None, 100, bold=False, italic=False)
 button_font = pygame.font.SysFont(None, 50)
 title_font = pygame.font.SysFont(None, 80, bold=True)
+turn_font = pygame.font.SysFont(None, 60, bold=True)
 
 Your_win_surface = font.render("Your Win!", False, BLACK, RED)
 Your_loss_surface = font.render("Your loss!", False, WHITE, RED)
@@ -229,6 +231,8 @@ def cpu_move():
         flip_pieces(x, y)
         # CPUが実際に石を置く
         board[y][x] = -1
+        pygame.display.update()
+        time.sleep(1)  # CPUの手が見えるように1秒待機
         
 # 選択した難易度の背景色を黄色に        
 def render_buttons(easy_rect, normal_rect, hard_rect):
@@ -290,6 +294,15 @@ def show_start_screen():
                 render_buttons(easy_rect, normal_rect, hard_rect)
                 pygame.display.update()
 
+def display_turn(turn_text):
+    screen.fill(GREEN)
+    draw_grid()
+    draw_board()
+    turn_surface = turn_font.render(turn_text, True, BLUE)
+    screen.blit(turn_surface, (screen_width//2 - 80, screen_height//2 - 30))
+    pygame.display.update()
+    time.sleep(1)
+    
 # タイトル画面__________________________________________________________________
 # スタート画面を表示
 show_start_screen()
@@ -336,7 +349,10 @@ while run:
         else:
             screen.blit(draw_surface, (280, 200))
             
-        screen.blit(reset_surface, (180, 400))
+        screen.blit(reset_surface, (180, 400))        
+    
+    pygame.display.update()
+    clock.tick(FPS)
         
     # イベントの取得
     for event in pygame.event.get():
@@ -357,6 +373,8 @@ while run:
                     board[y][x] = player
                     player *= -1
                     pass_num = 0
+                    # PLAYERのターンを開始する前に表示
+                    display_turn("CPU Turn")
                     
                     # 🎯 CPUの手番を追加（プレイヤーの手の後に CPU が動く）
                     pygame.time.delay(500)  
@@ -364,6 +382,8 @@ while run:
                     cpu_move()
                     # CPUの手が終わったら再びプレイヤーのターン
                     player *= -1
+                    # CPUのターンを開始する前に表示
+                    display_turn("Player Turn")
             else:
                 show_start_screen()
                 board = [
