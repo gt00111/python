@@ -60,8 +60,8 @@ font = pygame.font.SysFont(None, 100, bold=False, italic=False)
 button_font = pygame.font.SysFont(None, 50)
 title_font = pygame.font.SysFont(None, 80, bold=True)
 
-black_win_surface = font.render("Black Win!", False, BLACK, RED)
-white_win_surface = font.render("White Win!", False, WHITE, RED)
+Your_win_surface = font.render("Your Win!", False, BLACK, RED)
+Your_loss_surface = font.render("Your loss!", False, WHITE, RED)
 draw_surface = font.render("Draw...", False, BLUE, RED)
 reset_surface = font.render("Click to reset!", False, BLACK, RED)
 
@@ -256,9 +256,9 @@ def show_start_screen():
     button_rect = button_surface.get_rect(center=(screen_width//2, 400))
     screen.blit(button_surface, button_rect.topleft)
     
-    easy_rect = pygame.Rect(screen_width//2 - 150, 500, 100, 50)
-    normal_rect = pygame.Rect(screen_width//2 - 50, 500, 100, 50)
-    hard_rect = pygame.Rect(screen_width//2 + 50, 500, 100, 50)
+    easy_rect = pygame.Rect(screen_width//2 - 200, 500, 100, 50)
+    normal_rect = pygame.Rect(screen_width//2 - 60, 500, 100, 50)
+    hard_rect = pygame.Rect(screen_width//2 + 120, 500, 100, 50)
     
     render_buttons(easy_rect, normal_rect, hard_rect)
     
@@ -352,7 +352,7 @@ while run:
                 x = mx // square_size
                 y = my // square_size
                 if board[y][x] == 0 and (x, y) in valid_position_list:
-                    石をひっくり返す
+                    #石をひっくり返す
                     flip_pieces(x, y)
                     board[y][x] = player
                     player *= -1
