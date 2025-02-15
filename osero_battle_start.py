@@ -365,6 +365,7 @@ while run:
                     # CPUの手が終わったら再びプレイヤーのターン
                     player *= -1
             else:
+                show_start_screen()
                 board = [
                     [0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0],
